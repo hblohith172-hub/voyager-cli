@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "voyager-cli"
+version = "0.1.0"
+description = "A CLI tool for Voyager"
+requires-python = ">=3.8"
+dependencies = []
+
+[project.scripts]
+voyager = "voyager_cli.main:main"
+
+[tool.setuptools]
+packages = ["voyager_cli"]
