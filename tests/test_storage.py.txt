@@ -1,0 +1,31 @@
+python
+import unittest
+import os
+import tempfile
+from voyager_cli.storage import TaskStorage, Task
+
+
+class TestStorage(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.mkdtemp()
+        self.storage = TaskStorage.__new__(TaskStorage)
+        self.storage.filename = os.path.join(self.temp, "test.json")
+        self.storage._save_raw([])
+
+    def test_add(self):
+        self.assertEqual(self.storage.add_task("Test"), 1)
+
+    def test_get_all(self):
+        self.storage.add_task("A")
+        tasks = self.storage.get_all_tasks()
+        self.assertEqual(len(tasks), 1)
+        self.assertIsInstance(tasks[0], Task)
+
+    def test_mark_done(self):
+        self.storage.add_task("X")
+        self.storage.mark_done(1)
+        self.assertTrue(self.storage.get_all_tasks()[0].done)
+
+
+if __name__ == '__main__':
+    unittest.main()
